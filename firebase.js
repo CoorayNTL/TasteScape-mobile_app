@@ -1,22 +1,22 @@
 
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth";
-import {getFirestore} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore"; 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD5LdP7NoxR8UINZChUJbi78dFp-_WDAqw",
-  authDomain: "food-app-979ef.firebaseapp.com",
-  projectId: "food-app-979ef",
-  storageBucket: "food-app-979ef.appspot.com",
-  messagingSenderId: "373627899061",
-  appId: "1:373627899061:web:c975dd239549360e1882fc"
+  apiKey: "AIzaSyATuxMFXhU5CtC3bU70I-UGEGSE-1hAeOQ",
+  authDomain: "tasatescrap.firebaseapp.com",
+  projectId: "tasatescrap",
+  storageBucket: "tasatescrap.appspot.com",
+  messagingSenderId: "897761939334",
+  appId: "1:897761939334:web:b36276fb8cfc1084856607"
 };
 
 
+
+
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
-const db = getFirestore();
+const db = getFirestore(app);
 
 export {auth,db};

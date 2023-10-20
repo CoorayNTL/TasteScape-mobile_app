@@ -25,20 +25,18 @@ import { Provider } from "react-redux";
 import HomeScreen from "./screens/HomeScreen";
 import StackNavigator from "./StackNavigator";
 import store from "./store";
+import { NavigationContainer } from "@react-navigation/native";
+import Tabs from "./screens/RestaurantOwner/navigation/Tab";
+import Chat from "./screens/RestaurantOwner/Chat";
 
 export default function App() {
   return (
-    <>
-      <Provider store={store}>
-        <StackNavigator />
-      </Provider>
-    </>
+    <Provider store={store}>
+   <NavigationContainer>
+    <Tabs/>
+   </NavigationContainer>
+   </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
+
