@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+
 const RegisterScreen = () => {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
