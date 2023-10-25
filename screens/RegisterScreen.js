@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -16,43 +17,33 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 const RegisterScreen = () => {
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  
   const [showPassword, setShowPassword] = useState(false); 
+  const [userType, setUserType] = useState("food_finder");
   const toggleShowPassword = () => { 
     setShowPassword(!showPassword); 
-}; 
+};
   const navigation = useNavigation();
-  const register = () => {
-    if (email === "" || password === "" || name === "") {
-      Alert.alert(
-        "Invalid Details",
-        "Please fill all the details",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel",
-          },
-          { text: "OK", onPress: () => console.log("OK Pressed") },
-        ],
-        { cancelable: false }
-      );
-    }
-    createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        //coming from firebase auth
-        console.log("user credential", userCredential);
-        const user = userCredential._tokenResponse.email;
-        const myUserUid = auth.currentUser.uid;
+  const register = async () => {
+try{
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const userRef = doc(db, "users", user.id);
 
-        setDoc(doc(db, "users", `${myUserUid}`), {
-          email: user,
-          name: name,
-        });
-      }
-    );
+      await setDoc(userRef,{
+        email: user,
+        name: name,
+        userType: userType,
+      }); // Registration was successful
+        console.log('User registered successfully: ', user);
+      } catch(error)  {
+        // Registration failed, show an error message
+        console.error('Error registering user:', error);
+    }
   };
   return (
     <SafeAreaView
@@ -166,7 +157,23 @@ const RegisterScreen = () => {
                     onPress={toggleShowPassword} 
                 /> 
                 </View>
-
+                <Text style={{ alignContent: "left", width: 350, fontSize: 14 }}>
+            User Type
+          </Text>
+          <Picker
+            selectedValue={userType}
+            onValueChange={(itemValue) => setUserType(itemValue)}
+            style={{
+              width: "100%",
+              borderColor: "none",
+              backgroundColor: "#FAFAFA",
+              borderRadius: 7,
+              marginVertical: 10,
+            }}
+          >
+            <Picker.Item label="Food Finder" value="food_finder" />
+            <Picker.Item label="Restaurant Owner" value="restaurant_owner" />
+          </Picker>
           <Pressable
             onPress={register}
             style={{
@@ -183,7 +190,6 @@ const RegisterScreen = () => {
               Register
             </Text>
           </Pressable>
-
           <Pressable
             onPress={() => navigation.goBack()}
             style={{ marginTop: 20 }}
@@ -206,5 +212,3 @@ const RegisterScreen = () => {
 };
 
 export default RegisterScreen;
-
-const styles = StyleSheet.create({});
