@@ -180,7 +180,7 @@ try{
               width: "100%",
               backgroundColor: "#FF724C",
               padding: 15,
-              borderRadius: 7,
+              borderRadius: 30,
               marginTop: 50,
               marginLeft: "auto",
               marginRight: "auto",
