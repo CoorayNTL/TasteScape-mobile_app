@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"; // Import your icon
 import ChatScreen from "../AddDish";
 
 import OrdersScreen from "../Orders";
+import ViewAllOrdersCus from "../../Orders/ViewAllOrdersCus";
 import ProfileScreen from "../Account";
 import MenuItem from "../../../components/MenuItem";
 import MenuScreen from "./MenuStack";
@@ -56,7 +57,7 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="Orders"
-        component={OrdersScreen}
+        component={ViewAllOrdersCus}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="receipt" size={24} color={color} />
