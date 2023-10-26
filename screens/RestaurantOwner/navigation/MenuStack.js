@@ -12,10 +12,10 @@ const Stack = createStackNavigator();
 const MenuStack = () => {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen name="Menu" component={MenuScreen} />
+      <Stack.Screen name="Menu" component={MenuScreen} />
       <Stack.Screen name="AddDish" component={AddDish} />
       <Stack.Screen name="DishOverview" component={DishOverview} />
-      <Stack.Screen name="UpdateDish" component={UpdateDish} /> */}
+      <Stack.Screen name="UpdateDish" component={UpdateDish} />
     </Stack.Navigator>
   );
 };
