@@ -7,26 +7,21 @@ import AddDish from "../AddDish";
 import DishOverview from "../DishOverview";
 import UpdateDish from "../UpdateDish";
 import OrdersOverview from "../OrderOverview";
-
+import OrdersScreen from "../Orders";
 const Stack = createStackNavigator();
 
-const MenuStack = () => {
+const OrderStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Menu">
-      <Stack.Screen name="Menu" component={MenuScreen} options={{
+    <Stack.Navigator initialRouteName="Order">
+      
+      <Stack.Screen name="Order" component={OrdersScreen} options={{
           headerShown: false, // Hide the screen name in the top bar
-        }} />
-      <Stack.Screen name="AddDish" component={AddDish} options={{
-          headerShown: false, // Hide the screen name in the top bar
-        }} />
-      <Stack.Screen name="DishOverview" component={DishOverview} options={{
-          headerShown: false, // Hide the screen name in the top bar
-        }} />
-      <Stack.Screen name="UpdateDish" component={UpdateDish} options={{
+        }}/>
+        <Stack.Screen name="orderOverview" component={OrdersOverview} options={{
           headerShown: false, // Hide the screen name in the top bar
         }}/>
        
     </Stack.Navigator>
   );
 };
-export default MenuStack;
+export default OrderStack;
