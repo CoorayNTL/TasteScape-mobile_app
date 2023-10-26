@@ -12,39 +12,55 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword , getAuth} from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
+import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 const RegisterScreen = () => {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("food_finder");
-  const toggleShowPassword = () => { 
-    setShowPassword(!showPassword); 
-};
-  const navigation = useNavigation();
-  const register = async () => {
-try{
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      const userRef = doc(db, "users", user.id);
 
-      await setDoc(userRef,{
-        email: user,
+  const auth = getAuth();
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const register = async () => {
+    try {
+      if (!name || !email || !password) {
+        console.error("Please fill in all the required fields.");
+        return;
+      }
+  
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const db = getDatabase(); // Initialize the Realtime Database
+  
+      const userRef = ref(db, `users/${user.uid}`); // Create a reference to the user's data
+  
+      // Define the user data to be stored in the Realtime Database
+      const userData = {
+        email: user.email,
         name: name,
         userType: userType,
-      }); // Registration was successful
-        console.log('User registered successfully: ', user);
-      } catch(error)  {
-        // Registration failed, show an error message
-        console.error('Error registering user:', error);
+      };
+  
+      // Set the user data in the Realtime Database
+      await set(userRef, userData);
+  
+      // Registration was successful
+      console.log("User registered successfully:", user);
+    } catch (error) {
+      // Registration failed, show an error message
+      console.error("Error registering user:", error.message);
     }
   };
+  
+
   return (
     <SafeAreaView
       style={{
