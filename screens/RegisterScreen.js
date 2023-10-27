@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createUserWithEmailAndPassword , getAuth} from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
+import { useNavigation } from "@react-navigation/native";
 import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 const RegisterScreen = () => {
@@ -24,6 +25,7 @@ const RegisterScreen = () => {
   const [userType, setUserType] = useState("food_finder");
 
   const auth = getAuth();
+  const navigation = useNavigation();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -51,9 +53,11 @@ const RegisterScreen = () => {
 
       // Set the user data in the Realtime Database
       await set(userRef, userData);
+      navigation.replace("Home", { user: userData });
 
       // Registration was successful
       console.log("User registered successfully:", user);
+
     } catch (error) {
       // Registration failed, show an error message
       console.error("Error registering user:", error.message);
