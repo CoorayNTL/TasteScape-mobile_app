@@ -37,7 +37,7 @@ const StackNavigator = () => {
           {() => (
             
             <Tab.Navigator>
-              <Tab.Screen name="Tabss" component={Tabss} options={{ headerShown: false }}/>
+              <Tab.Screen name="Tabss" component={Tabss} options={{ headerShown: false ,tabBarStyle: { display: 'none' }}}/>
             </Tab.Navigator>
           )}
         </Stack.Screen>

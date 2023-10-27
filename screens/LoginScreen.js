@@ -6,16 +6,25 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
-import { get, ref, database } from "firebase/database"; 
+import { onAuthStateChanged } from "firebase/auth";
+import {
+  getDocs,
+  collection,
+  query,
+  where,
+  getDoc,
+  doc,
+} from "firebase/firestore";
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -23,49 +32,58 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
-  const [userType, setUserType] = useState(null); // State to store the user's type
+  const [userType, setUserType] = useState(null);
+
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+
+
   useEffect(() => {
     setLoading(true);
-    const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (!authUser) {
         setLoading(false);
       }
       if (authUser) {
         try {
-          // Replace with the path to the user's data in your Realtime Database
-          const userRef = ref(database, "users/" + authUser.uid);
-
-          get(userRef).then((snapshot) => {
-            if (snapshot.exists()) {
-              const userData = snapshot.val();
-              console.log(userData.name);
-            } else {
-              console.error("User data not found in the Realtime Database.");
-            }
-          }).catch((error) => {
-            console.error("Error fetching user data from the Realtime Database: ", error);
-          });
+          console.log(authUser.uid)
+          const usersCollection = collection(db, "users");
+           
+          const q = query(usersCollection, where("uid", "==", authUser.uid));
+          const userDocSnap = await getDocs(q);
+  
+          if (!userDocSnap.empty) {
+            userDocSnap.forEach((doc) => {
+              const userData = doc.data();
+              const userType = userData.userType;
+  
+              if (userType === "restaurant_owner") {
+                navigation.navigate("ResturentHome");
+              } else {
+                navigation.navigate("Home");
+              }
+            });
+          } else {
+            navigation.navigate("Home");
+          }
         } catch (error) {
-          console.error("Error: ", error);
+          console.error("Error fetching user data from Firestore: ", error);
         }
       }
     });
-
+  
     return unsubscribe;
   }, []);
-
+  
   const login = () => {
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      
       const user = userCredential.user;
-      
     });
-  }
+  };
+
   return (
     <SafeAreaView
       style={{

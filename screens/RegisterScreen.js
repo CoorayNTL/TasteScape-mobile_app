@@ -14,7 +14,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { db } from "./../firebase"; 
 import { collection, addDoc } from "firebase/firestore";
-
+import { doc, setDoc } from "firebase/firestore";
 
 const RegisterScreen = () => {
   const [name, setName] = useState("");
@@ -30,34 +30,35 @@ const RegisterScreen = () => {
     setShowPassword(!showPassword);
   };
 
-  const register = async () => {
+  const handleRegister = async () => {
     try {
-      if (!name || !email || !password) {
-        console.error("Please fill in all the required fields.");
-        return;
-      }
-
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      // Create a new user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
-      // Store user data in Firestore
-      await addDoc(collection(db, "users"), {
+  
+      // Save additional user details to Firestore with the UID as the document ID
+      const userRef = doc(db, "users", user.uid); // Use the UID as the document ID
+      const newUser = {
+        uid: user.uid,
         name: name,
         email: email,
         userType: userType,
         premium: premium,
-      });
-      // Registration was successful
-      console.log("User registered successfully:", user);
+        // Add other user details as needed
+      };
+  
+      // Set the user details to Firestore with the provided document ID
+      await setDoc(userRef, newUser);
+  
+      // You can optionally navigate to another screen upon successful registration
+      // navigation.navigate("HomeScreen");
     } catch (error) {
-      // Registration failed, show an error message
-      console.error("Error registering user:", error.message);
+      // Handle registration or Firestore data saving errors here
+      console.error("Error registering user:", error);
     }
   };
+
+  
 
   return (
     <SafeAreaView
@@ -200,7 +201,7 @@ const RegisterScreen = () => {
             <Picker.Item label="Restaurant Owner" value="restaurant_owner" />
           </Picker>
           <Pressable
-            onPress={register}
+            onPress={handleRegister}
             style={{
               width: "100%",
               backgroundColor: "#FF724C",
