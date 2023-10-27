@@ -18,6 +18,8 @@ import hotels from "../data/hotels";
 import MenuItem from "../components/MenuItem";
 import { useNavigation } from "@react-navigation/native";
 import Tabs from "./RestaurantOwner/navigation/Tab";
+import PremiumBanner from "../components/PremiumBanner";
+
 
 const HomeScreen = () => {
     const navigation = useNavigation();
@@ -53,8 +55,9 @@ const HomeScreen = () => {
                     style={{ fontSize: 17 }}
                     placeholder="Search for Restaurant item or more"
                 />
-                <AntDesign name="search1" size={24} color="#E52B50" />
+                <AntDesign name="search1" size={24} color="#FF724C" />
             </View>
+            <PremiumBanner />
 
             {/* Image slider Component */}
             <Carousel />
