@@ -1,20 +1,47 @@
 import { StyleSheet, Text, View,SafeAreaView,Pressable, Image } from 'react-native'
-import React from 'react'
-import { auth } from '../firebase'
+import { auth,db } from '../firebase'
 import { signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
 
 const ProfileScreen = () => {
-    const user = auth.currentUser;
-    const navigation = useNavigation();
-    const signOutUser = () => {
-        signOut(auth).then(() => {
-            navigation.replace("Login");
-        }).catch(err => {
-            console.log(err);
-        })
+  const user = auth.currentUser;
+  const navigation = useNavigation();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      // Fetch user data from Firestore using the user's UID
+      const getUserData = async () => {
+        try {
+          const docRef = await db.collection('users').doc(user.uid).get();
+          if (docRef.exists) {
+            const userData = docRef.data();
+            console.log(userData);
+            // Assuming you have a 'name' field in your Firestore document
+            setUserName(userData.name);
+          } else {
+            console.log('No such document!');
+          }
+        } catch (error) {
+          console.error('Error getting user data:', error);
+        }
+      };
+
+      getUserData();
     }
+  }, [user]);
+
+  const signOutUser = () => {
+    signOut(auth)
+      .then(() => {
+        navigation.replace('Login');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
       <View style={{width: '100%', borderBottomColor:'#E8E8E8', borderBottomWidth:1, alignItems: 'center',paddingBottom:5}}>
@@ -29,7 +56,7 @@ const ProfileScreen = () => {
                 />
       </View>
       <Pressable style={{marginVertical:10}}>
-        <Text style={{fontSize:16}}>welcome {user.email}</Text>
+        <Text style={{fontSize:16}}>welcome {userName}</Text>
       </Pressable>
 
       <Pressable onPress={signOutUser} style={{ paddingHorizontal:6, padding:2, borderColor:'#FF724C', borderWidth:1}}>
