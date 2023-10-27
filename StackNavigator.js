@@ -6,7 +6,7 @@ import HomeScreen from "./screens/HomeScreen";
 import MenuScreen from "./screens/MenuScreen";
 import CartScreen from "./screens/CartScreen";
 import LoadingScreen from "./screens/LoadingScreen";
-import OrderScreen from "./screens/OrderScreen";
+// import OrderScreen from "./screens/OrderScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -21,6 +21,9 @@ import FeedbackViewList from "./screens/FeedbackViewList";
 import UpdateFeedBack from "./screens/UpdateFeedback";
 import AdUploadScreen from "./screens/AdUploadScreen";
 import ViewAddDetailsScreen from "./screens/ViewAddDetailsScreen";
+import ViewAllOrdersCus from "./screens/Orders/ViewAllOrdersCus";
+import MenuStack from "./screens/RestaurantOwner/navigation/MenuStack";
+import Tabss from "./screens/RestaurantOwner/navigation/Tab";
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -57,11 +60,11 @@ const StackNavigator = () => {
                     component={LoadingScreen}
                     options={{ headerShown: false }}
                 />
-                <Stack.Screen
+                {/* <Stack.Screen
                     name="Order"
                     component={OrderScreen}
                     options={{ headerShown: false }}
-                />
+                /> */}
                 <Stack.Screen
                     name="Profile"
                     component={ProfileScreen}
@@ -107,6 +110,30 @@ const StackNavigator = () => {
                     name="ViewAddDetailsScreen"
                     component={ViewAddDetailsScreen}
                 />
+
+                <Stack.Screen
+                    name="Order"
+                    component={ViewAllOrdersCus}
+                    options={{ headerShown: false }}
+                />
+
+                <Stack.Screen
+                    name="ResturentHome"
+                    options={{ headerShown: false }}
+                >
+                    {() => (
+                        <Tab.Navigator>
+                            <Tab.Screen
+                                name="Tabss"
+                                component={Tabss}
+                                options={{
+                                    headerShown: false,
+                                    tabBarStyle: { display: "none" },
+                                }}
+                            />
+                        </Tab.Navigator>
+                    )}
+                </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );

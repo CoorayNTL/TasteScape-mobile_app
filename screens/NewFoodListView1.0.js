@@ -63,7 +63,7 @@ const NewFoodListView1 = ({ navigation }) => {
                         />
 
                         <View style={styles.content}>
-                            <Text style={styles.title}>{item.name}</Text>
+                            <Text style={styles.title}>{item.Feed}</Text>
                             <Text style={styles.description}>
                                 {item.description}
                             </Text>

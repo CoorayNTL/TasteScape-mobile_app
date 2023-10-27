@@ -109,7 +109,7 @@ const AddReview = ({ navigation, route }) => {
                 reviewImages: foodData.image,
                 // feedbackImages: feedbackImages.map((image) => image.uri),
                 foodId: foodData.id,
-                foodName: foodData.name,
+                food: foodData.name,
                 food_discription : foodData.description,
             });
             Alert.alert("Review added successfully");

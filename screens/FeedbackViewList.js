@@ -12,6 +12,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { useFocusEffect } from "@react-navigation/native";
 import { Rating } from "react-native-ratings";
+
 const FeedbackViewList = ({ navigation }) => {
     const [feedback, setFeedback] = useState([]);
 
@@ -29,7 +30,8 @@ const FeedbackViewList = ({ navigation }) => {
                     feedback: data.feedback,
                     rating: data.rating,
                     food: data.food,
-                    images: data.images || [],
+                    images: data.images,
+                    reviewImages: data.reviewImages || [],
                 });
             });
 
@@ -59,6 +61,10 @@ const FeedbackViewList = ({ navigation }) => {
                         }}
                     >
                         <View style={styles.feedbackItem}>
+                            <Image
+                                source={{ uri: item.reviewImages }}
+                                style={styles.feedbackImage}
+                            />
                             <View>
                                 <Text style={styles.feedbackText}>
                                     {item.feedback}
@@ -97,6 +103,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
+        backgroundColor: '#f0f0f0',
     },
     title: {
         fontSize: 24,
@@ -104,22 +111,24 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     feedbackItem: {
-      borderWidth: 1, 
+        borderWidth: 1,
         borderColor: "#ddd",
-        borderRadius: 10, 
+        borderRadius: 10,
         flexDirection: "row",
         justifyContent: "space-between",
         borderBottomWidth: 1,
         borderBottomColor: "#ccc",
+        backgroundColor: '#ffffff',
         padding: 10,
-        marginBottom: 10,
+        marginBottom: 20,
         alignItems: "center",
+        flexDirection: "row",
     },
     feedbackText: {
-      fontSize: 18,
+        fontSize: 18,
     },
     feedbackRating: {
-      fontSize: 16,
+        fontSize: 16,
     },
     feedbackImage: {
         width: 100,

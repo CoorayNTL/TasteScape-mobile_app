@@ -103,8 +103,9 @@ const HomeScreen = () => {
                         justifyContent: "center",
                         width: 120,
                     }}
+                    onPress={() => navigation.navigate("FeedbackViewList")}
                 >
-                    <Text>Sort By Rating</Text>
+                    <Text>List of Rating</Text>
                 </Pressable>
 
                 <Pressable
@@ -118,8 +119,10 @@ const HomeScreen = () => {
                         borderRadius: 20,
                         justifyContent: "center",
                     }}
+
+                    onPress={() => navigation.navigate("NewFoodListView")}
                 >
-                    <Text>Sort By Price</Text>
+                    <Text>Sort By Rating</Text>
                 </Pressable>
             </View>
             {data.map((item, index) => (

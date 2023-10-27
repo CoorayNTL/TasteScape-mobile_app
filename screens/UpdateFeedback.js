@@ -1,5 +1,3 @@
-
-  
 // import React, { useState, useEffect } from "react";
 // import {
 //     View,
@@ -209,8 +207,6 @@
 
 // export default UpdateFeedBack;
 
-
-
 import React, { useState, useEffect } from "react";
 import {
     View,
@@ -227,6 +223,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { collection, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import StarRating from "react-native-star-rating";
 
 const UpdateFeedBack = ({ navigation, route }) => {
     const [id, setId] = useState("");
@@ -234,6 +231,7 @@ const UpdateFeedBack = ({ navigation, route }) => {
     const [food, setFood] = useState("");
     const [rating, setRating] = useState(0);
     const [images, setImages] = useState([]);
+    const [image, setImage] = useState(null);
 
     const { review } = route.params;
 
@@ -243,6 +241,7 @@ const UpdateFeedBack = ({ navigation, route }) => {
         setFood(review.food || "");
         setRating(review.rating || "");
         setImages(review.images || []);
+        setImage(review.image || null);
     }, [review]);
 
     const handleImageUpload = () => {
@@ -303,14 +302,20 @@ const UpdateFeedBack = ({ navigation, route }) => {
                                 food,
                                 rating,
                                 images,
+                                reviewImages: image,
                             };
 
                             await updateDoc(reviewRef, updatedReviewData);
                             console.log("Review updated successfully");
 
-                            navigation.navigate("Menu");
+                           //display altert message 
+                            Alert.alert("Review updated successfully");
+
+                            navigation.navigate("FeedbackViewList");
                         } catch (error) {
-                            console.error("Error updating review: " + error.message);
+                            console.error(
+                                "Error updating review: " + error.message
+                            );
                         }
                     },
                 },
@@ -339,10 +344,11 @@ const UpdateFeedBack = ({ navigation, route }) => {
         <View style={styles.container}>
             <Text style={styles.title}>Update Review</Text>
             <TouchableOpacity onPress={handleImageUpload}>
-                <Text style={styles.uploadText}>
-                    Add Images to the Review
-                </Text>
+                <Text style={styles.uploadText}>Add Images to the Review</Text>
             </TouchableOpacity>
+            <View style={styles.imageContainer}>
+                <Image source={{ uri: image }} style={styles.reviewImage} />
+            </View>
 
             <ScrollView horizontal>
                 {images.map((imageUri, index) => (
@@ -358,8 +364,9 @@ const UpdateFeedBack = ({ navigation, route }) => {
                             />
                             <Button
                                 title="Update"
-                                onPress={() => {/* handle image update logic */
-                              }}
+                                onPress={() => {
+                                    /* handle image update logic */
+                                }}
                             />
                         </View>
                     </View>
@@ -375,12 +382,22 @@ const UpdateFeedBack = ({ navigation, route }) => {
                 />
             </View>
 
-            <View style={styles.inputContainer}>
+            {/* <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Rating</Text>
                 <TextInput
                     style={styles.input}
                     value={rating}
                     onChangeText={setRating}
+                />
+            </View> */}
+
+            <View style={styles.ratingContainer}>
+                <Text style={styles.inputLabel}>Rating</Text>
+                <StarRating
+                    disabled={false}
+                    maxStars={5}
+                    rating={rating}
+                    selectedStar={(rating) => setRating(rating)}
                 />
             </View>
 

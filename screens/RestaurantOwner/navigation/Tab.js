@@ -3,8 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons"; // Import your icon library
 
 import ChatScreen from "../AddDish";
-
-import OrdersScreen from "../Orders";
+import OrdersScreen from "./OrderStack";
 import ProfileScreen from "../Account";
 import MenuItem from "../../../components/MenuItem";
 import MenuScreen from "./MenuStack";
@@ -16,6 +15,7 @@ const Tabs = () => {
     <Tab.Navigator
       tabBarOptions={{
         style: {
+          paddingTop: 20,
           backgroundColor: "#FF724C", // Background color
           borderRadius: 15, // Rounded corners
           shadowColor: "#A6A6A6", // Shadow color
@@ -37,10 +37,13 @@ const Tabs = () => {
       <Tab.Screen
         name="Chat"
         component={ChatScreen}
+        
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chat" size={24} color={color} />
           ),
+          headerShown: false, 
+          headerTitle: null, // Hide the screen name in the top bar
           tabBarLabel: "Chat", // Display label below the icon
         }}
       />
@@ -51,6 +54,8 @@ const Tabs = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="menu" size={24} color={color} />
           ),
+          headerShown: false, 
+          headerTitle: null, // Hide the screen name in the top bar
           tabBarLabel: "Menu",
         }}
       />
@@ -61,6 +66,8 @@ const Tabs = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="receipt" size={24} color={color} />
           ),
+          headerShown: false, 
+          headerTitle: null, // Hide the screen name in the top bar
           tabBarLabel: "Orders",
         }}
       />
@@ -71,6 +78,8 @@ const Tabs = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" size={24} color={color} />
           ),
+          headerShown: false, 
+          headerTitle: null, // Hide the screen name in the top bar
           tabBarLabel: "Profile",
         }}
       />
