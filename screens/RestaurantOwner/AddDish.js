@@ -3,6 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity, Ale
 import ImagePicker from 'react-native-image-picker';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../firebase';
+import { auth } from "../../firebase"; 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const AddDish = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -12,6 +14,7 @@ const AddDish = ({ navigation }) => {
   const [preparationTime, setPreparationTime] = useState("");
   const [price, setPrice] = useState("");
   const [dishImage, setDishImage] = useState(null);
+  const [userUid, setUserUid] = useState(null);
 
   const handleImageUpload = () => {
     const options = {
@@ -21,7 +24,7 @@ const AddDish = ({ navigation }) => {
         path: 'images',
       },
     };
-
+   
     ImagePicker.showImagePicker(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -29,6 +32,22 @@ const AddDish = ({ navigation }) => {
         console.log('ImagePicker Error: ', response.error);
       } else {
         setDishImage({ uri: response.uri });
+      }
+    });
+  };
+
+
+  useEffect(() => {
+    fetchUserUid();
+  }, []);
+
+  const fetchUserUid = () => {
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserUid(user.uid); // Set the user's UID to the state variable
+        console.log(user.uid)
       }
     });
   };
@@ -50,6 +69,7 @@ const AddDish = ({ navigation }) => {
         preparationTime: preparationTime,
         price: price,
         image: dishImage ? dishImage.uri : null,
+        uid: userUid
       };
 
       const docRef = await addDoc(dishesCollection, dishData);
@@ -142,6 +162,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    paddingTop: 50
   },
   title: {
     fontSize: 24,
