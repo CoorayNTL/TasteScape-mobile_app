@@ -32,9 +32,8 @@ import Chat from "./screens/RestaurantOwner/Chat";
 export default function App() {
   return (
     <Provider store={store}>
-   <NavigationContainer>
-    <Tabs/>
-   </NavigationContainer>
+      <StackNavigator/>
+   
    </Provider>
   );
 }

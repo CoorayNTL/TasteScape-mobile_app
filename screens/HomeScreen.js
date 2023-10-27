@@ -17,11 +17,13 @@ import { Ionicons } from "@expo/vector-icons";
 import hotels from "../data/hotels";
 import MenuItem from "../components/MenuItem";
 import { useNavigation } from "@react-navigation/native";
+import Tabs from "./RestaurantOwner/navigation/Tab";
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const data = hotels;
     return (
+        <View>
         <ScrollView style={{ marginTop: 50 }}>
             <Pressable
                 onPress={() => navigation.navigate("Profile")}
@@ -123,6 +125,7 @@ const HomeScreen = () => {
                 <MenuItem key={index} item={item} />
             ))}
         </ScrollView>
+        </View>
     );
 };
 
