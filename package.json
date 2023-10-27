@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@react-native-community/blur": "^4.3.2",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
     "@reduxjs/toolkit": "^1.9.6",
     "expo": "~49.0.13",
+    "expo-av": "~13.4.1",
     "expo-crypto": "^12.6.0",
     "expo-image": "^1.5.1",
     "expo-image-picker": "~14.3.2",

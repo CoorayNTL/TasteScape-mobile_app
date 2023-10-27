@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
     View,
@@ -7,7 +8,6 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
-    ScrollView,
     Pressable,
 } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
@@ -46,13 +46,13 @@ const NewFoodListView1 = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.titleOfView}>Menu</Text>
-            {/* <Shadow style={styles.shadowContainer}> */}
             <FlatList
-                style={styles.shadowContainer}
+                style={styles.gridContainer}
                 data={dishes}
+                numColumns={2} 
                 renderItem={({ item }) => (
                     <Pressable
-                        style={styles.itemContainer}
+                        style={styles.gridItem}
                         onPress={() =>
                             navigation.navigate("FoodList", { id: item.id })
                         }
@@ -69,7 +69,7 @@ const NewFoodListView1 = ({ navigation }) => {
                             </Text>
                             <View style={styles.reviewContainer}>
                                 <Rating
-                                    imageSize={10}
+                                    imageSize={20}
                                     startingValue={item.rating}
                                 />
                                 <Text style={styles.countText}>
@@ -79,7 +79,7 @@ const NewFoodListView1 = ({ navigation }) => {
                             </View>
 
                             <Pressable
-                                style={styles.reviewButton}
+                                style={styles.updateButton}
                                 onPress={() =>
                                     navigation.navigate("Review", {
                                         foodData: item,
@@ -95,18 +95,21 @@ const NewFoodListView1 = ({ navigation }) => {
                 )}
                 keyExtractor={(item) => item.id}
             />
-            {/* </Shadow> */}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    itemContainer: {
-        marginBottom: 10,
+    gridContainer: {
+        paddingHorizontal: 10,
+    },
+    gridItem: {
+        flex: 1,
+        margin: 5, 
         borderWidth: 1,
         borderColor: "grey",
         borderRadius: 10,
-        overflow: "hidden", // Ensure children don't overflow
+        overflow: "hidden", 
     },
     image: {
         width: "100%",
@@ -129,15 +132,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     description: {
-        fontSize: 13,
-        fontWeight: "400",
+        fontSize: 16,
+        fontWeight: "420",
         marginTop: 5,
         marginBottom: 10,
-    },
-    reviewButtonContainer: {
-        borderTopWidth: 1, // Add a border to separate content from the button
-        borderColor: "grey",
-        paddingVertical: 10,
     },
     reviewButton: {
         width: "100%",
@@ -161,19 +159,16 @@ const styles = StyleSheet.create({
     reviewContainer: {
         flexDirection: "row",
     },
-    shadowProp: {
-        shadowOffset: { width: -2, height: 4 },
-        shadowColor: "#171717",
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-    },
-    shadowContainer: {
-        margin: 15,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.75,
-        shadowRadius: 3.84,
-        elevation: 5,
+
+    updateButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 30,
+        elevation: 3,
+       
+        backgroundColor: "#FF724C",
     },
 });
 

@@ -359,7 +359,6 @@ const UpdateFeedBack = ({ navigation, route }) => {
                             <Button
                                 title="Update"
                                 onPress={() => {/* handle image update logic */
-                                      
                               }}
                             />
                         </View>

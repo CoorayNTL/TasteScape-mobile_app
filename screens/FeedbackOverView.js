@@ -199,7 +199,7 @@ import {
     ScrollView,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-
+import { Rating } from "react-native-ratings";
 const FeedbackView = ({ navigation, route }) => {
     const { feedback, food, images, rating } = route.params;
 
@@ -218,7 +218,10 @@ const FeedbackView = ({ navigation, route }) => {
                             {feedback.food}
                         </Text>
                         <Text style={styles.feedbackRating}>
-                            Rating: {feedback.rating}
+                        <Rating
+                                    imageSize={10}
+                                    startingValue={feedback.rating}
+                                />
                         </Text>
 
 

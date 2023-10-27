@@ -29,7 +29,7 @@ const ManageUserFeedBack = () => {
             .catch((error) => {
                 console.error("Error fetching feedback data: ", error);
             });
-    }, []);
+    }, []); 
 
     const handleEditFeedback = (feedback) => {
         setSelectedFeedback(feedback);

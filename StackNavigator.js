@@ -19,6 +19,8 @@ import ManageUserFeedBack from "./screens/ManageUserFeedBack1.0";
 import ReviewView from "./screens/FeedbackOverView";
 import FeedbackViewList from "./screens/FeedbackViewList";
 import UpdateFeedBack from "./screens/UpdateFeedback";
+import AdUploadScreen from "./screens/AdUploadScreen";
+import ViewAddDetailsScreen from "./screens/ViewAddDetailsScreen";
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -93,7 +95,18 @@ const StackNavigator = () => {
                     name="FeedbackViewList"
                     component={FeedbackViewList}
                 />
-                <Stack.Screen name="UpdateFeedBack" component={UpdateFeedBack} />
+                <Stack.Screen
+                    name="UpdateFeedBack"
+                    component={UpdateFeedBack}
+                />
+                <Stack.Screen
+                    name="AdUploadScreen"
+                    component={AdUploadScreen}
+                />
+                <Stack.Screen
+                    name="ViewAddDetailsScreen"
+                    component={ViewAddDetailsScreen}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );

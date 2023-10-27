@@ -22,7 +22,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 const AddReview = ({ navigation, route }) => {
     const { foodData } = route.params;
     const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
+    const [feedback, setFeedback] = useState("");
     const [rating, setRating] = useState(0);
     const [reviewImages, setReviewImages] = useState([]);
     const [feedbackImages, setFeedbackImages] = useState([]);
@@ -51,7 +51,6 @@ const AddReview = ({ navigation, route }) => {
                         `${type}/${new Date().getTime()}`
                     );
                     const uploadTask = uploadBytesResumable(storageRef, uri);
-
                     // Listen for events during upload
                     uploadTask.on(
                         "state_changed",
@@ -62,6 +61,7 @@ const AddReview = ({ navigation, route }) => {
                                     snapshot.totalBytes) *
                                 100;
                             console.log(`Upload is ${progress}% done`);
+                            set
                         },
                         (error) => {
                             // Handle error
@@ -96,20 +96,21 @@ const AddReview = ({ navigation, route }) => {
     };
 
     const addReviewToFirebase = async () => {
-        if (!name || !description || rating === 0) {
+        if ( !feedback || rating === 0) {
             Alert.alert("Please fill all the fields");
             return;
         }
-
+        //feedback,food,images,rating
         try {
             const docRef = await addDoc(collection(db, "reviews"), {
-                name,
-                description,
+                // name,
+                feedback,
                 rating,
-                reviewImages: reviewImages.map((image) => image.uri),
-                feedbackImages: feedbackImages.map((image) => image.uri),
+                reviewImages: foodData.image,
+                // feedbackImages: feedbackImages.map((image) => image.uri),
                 foodId: foodData.id,
                 foodName: foodData.name,
+                food_discription : foodData.description,
             });
             Alert.alert("Review added successfully");
             navigation.goBack();
@@ -125,8 +126,9 @@ const AddReview = ({ navigation, route }) => {
             <Text style={styles.title}>Add Review</Text>
             <Text style={styles.foodName}>{foodData.name}</Text>
             <Image source={{ uri: foodData.image }} style={styles.foodImage} />
+            <Text  style = {styles.foodName}>{foodData.description}</Text>
             <View style={styles.imageUploadSection}>
-                <TouchableOpacity onPress={() => handleImageUpload("Review")}>
+                {/* <TouchableOpacity onPress={() => handleImageUpload("Review")}>
                     {reviewImages.length > 0 ? (
                         <ScrollView
                             horizontal
@@ -165,22 +167,22 @@ const AddReview = ({ navigation, route }) => {
                             Upload Feedback Images
                         </Text>
                     )}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
-            <View style={styles.inputContainer}>
+            {/* <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Name</Text>
                 <TextInput
                     style={styles.input}
                     value={name}
                     onChangeText={setName}
                 />
-            </View>
+            </View> */}
             <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Description</Text>
+                <Text style={styles.inputLabel}>Feedback</Text>
                 <TextInput
                     style={styles.input}
-                    value={description}
-                    onChangeText={setDescription}
+                    value={feedback}
+                    onChangeText={setFeedback}
                 />
             </View>
             <View style={styles.ratingContainer}>
