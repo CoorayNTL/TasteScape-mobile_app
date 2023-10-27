@@ -6,11 +6,12 @@ import HomeScreen from './screens/HomeScreen';
 import MenuScreen from './screens/MenuScreen';
 import CartScreen from './screens/CartScreen';
 import LoadingScreen from './screens/LoadingScreen';
-import OrderScreen from './screens/OrderScreen';
+import OwnerScreen from './screens/OwnerScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ViewAllOrdersCus from './screens/Orders/ViewAllOrdersCus';
+import FoodFinder from './screens/FoodFinder';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -25,6 +26,8 @@ const StackNavigator = () => {
         <Stack.Screen name="Loading" component={LoadingScreen} options={{headerShown :false}}/>
         <Stack.Screen name="Order" component={ViewAllOrdersCus} options={{headerShown :false}}/>
         <Stack.Screen name="Profile" component={ProfileScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="Owner" component={OwnerScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="FoodFinder" component={FoodFinder} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

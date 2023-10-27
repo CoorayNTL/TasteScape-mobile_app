@@ -21,14 +21,15 @@ import Tabs from "./RestaurantOwner/navigation/Tab";
 import PremiumBanner from "../components/PremiumBanner";
 
 
-const HomeScreen = () => {
+const HomeScreen = ({route}) => {
+    const { user } = route.params;
     const navigation = useNavigation();
     const data = hotels;
     return (
         <View>
         <ScrollView style={{ marginTop: 50 }}>
             <Pressable
-                onPress={() => navigation.navigate("Profile")}
+                onPress={() => navigation.navigate("Profile", { user: user })}
                 style={{ marginLeft: "auto", marginRight: 7 }}
             >
                 <Image

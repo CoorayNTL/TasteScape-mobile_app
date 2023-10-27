@@ -14,6 +14,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { getDatabase, ref, onValue } from "firebase/database";
+
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [loading,setLoading] = useState(false);
@@ -29,21 +31,38 @@ const LoginScreen = () => {
       if(!authUser){
         setLoading(false);
       }
-      if(authUser){
-        navigation.replace("Home");
-      }
+      // if(authUser){
+      //   navigation.replace("Owner");
+      // }
     });
 
     return unsubscribe;
   },[])
   
   const login = () => {
-    signInWithEmailAndPassword(auth,email,password).then((userCredential) => {
-      console.log("user credential",userCredential);
-      const user = userCredential.user;
-      console.log("user details",user)
-    })
-  }
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        
+        // Fetch user data from Realtime Database based on user's UID
+        const db = getDatabase();
+        const userRef = ref(db, `users/${user.uid}`);
+  
+        onValue(userRef, (snapshot) => {
+          const userData = snapshot.val();
+          
+             console.log(userData.userType);
+            // Check user type and navigate accordingly
+           
+              navigation.replace("Home", { user: userData });
+          
+        });
+      })
+      .catch((error) => {
+        console.error("Login failed:", error.message);
+      });
+  };
+  
 
   return (
     <SafeAreaView
@@ -68,7 +87,7 @@ const LoginScreen = () => {
             marginTop: 100,
           }}
         >
-<Pressable
+        <Pressable
             onPress={() => navigation.goBack()}
             style={{ marginBottom: 20 }}
           >
@@ -113,8 +132,8 @@ const LoginScreen = () => {
           <Text style={{ alignContent: "left", width: 350 ,fontSize: 14}}>Password</Text>
           <View style={{flexDirection: 'row', 
         alignItems: 'center', }}><TextInput
-            // Set secureTextEntry prop to hide  
-                    //password when showPassword is false 
+            // Set secureTextEntry prop to hide
+            // password when showPassword is false 
                     secureTextEntry={!showPassword} 
                     value={password} 
                     onChangeText={setPassword}  
