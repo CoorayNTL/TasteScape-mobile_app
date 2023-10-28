@@ -7,7 +7,7 @@ import { getFirestore, doc, deleteDoc } from "firebase/firestore";
 const DishOverview = ({ route, navigation }) => {
   // Extract dish details from the route params
   const { dish } = route.params;
-
+  
   const handleDeleteDish = async () => {
     const firestore = getFirestore();
     const dishDocRef = doc(firestore, "dishes", dish.id); // Specify the collection and document ID
@@ -36,7 +36,7 @@ const DishOverview = ({ route, navigation }) => {
 </Pressable>
 
 
-    <Pressable style={styles.button2} onPress={{handleDeleteDish} }>
+    <Pressable style={styles.button2} onPress={handleDeleteDish }>
       <Text style={styles.text}>Delete Dish</Text>
     </Pressable>
     </View>

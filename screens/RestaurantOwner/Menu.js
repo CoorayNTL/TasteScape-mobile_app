@@ -1,39 +1,67 @@
-import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet, FlatList, Image, TouchableOpacity, ScrollView, Pressable } from "react-native";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from '../../firebase';
+import { useFocusEffect } from '@react-navigation/native';
 import image from '../../assets/image5.jpg';
-import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
+
+import React, { useCallback, useEffect, useState } from "react";
+
+
+
 
 const Menu = ({ navigation }) => {
   const [dishes, setDishes] = useState([]);
+  const [userUid, setUserUid] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  // Fetch dishes from Firestore
-  const fetchDishes = async () => {
-    try {
-      const dishesCollection = collection(db, "dishes");
-      const dishesSnapshot = await getDocs(dishesCollection);
-      const dishList = [];
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserUid(user.uid);
+      }
+    });
 
-      dishesSnapshot.forEach((doc) => {
-        dishList.push({
-          id: doc.id,
-          ...doc.data(),
-        });
-      });
+    return () => unsubscribe();
+  }, []);
 
-      setDishes(dishList);
-    } catch (error) {
-      console.error("Error fetching dishes:", error);
-    }
-  };
-
-  // Use the useFocusEffect hook to refresh data when the screen gains focus
   useFocusEffect(
-    React.useCallback(() => {
-      fetchDishes();
+    useCallback(() => {
+      setRefreshKey(prevKey => prevKey + 1);
     }, [])
   );
+
+  useEffect(() => {
+    const fetchDishes = async () => {
+      try {
+        if (userUid) {
+          const dishesCollection = collection(db, "dishes");
+          const q = query(dishesCollection, where("uid", "==", userUid));
+          const dishesSnapshot = await getDocs(q);
+
+          const dishList = [];
+          dishesSnapshot.forEach((doc) => {
+            dishList.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+
+          setDishes(dishList);
+        }
+      } catch (error) {
+        console.error("Error fetching dishes:", error);
+      }
+    };
+
+    fetchDishes();
+  }, [userUid, refreshKey]);
+  
+ 
+ 
 
   return (
     <View style={styles.container}>
@@ -75,6 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Center content vertically
     alignItems: "center", // Center content horizontally
     padding: 10,
+    paddingTop: 40,
   },
   centeredContent: {
     width: "100%",
@@ -111,6 +140,7 @@ const styles = StyleSheet.create({
     color: "#FF724C", // Set the font color to #FF724C
   },
   button: {
+    marginTop: 50,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
