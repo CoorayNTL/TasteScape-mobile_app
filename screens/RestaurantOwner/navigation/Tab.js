@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"; // Import your icon
 
 import ChatScreen from "../AddDish";
 import OrdersScreen from "./OrderStack";
-import ProfileScreen from "../Account";
+import ProfileScreen from "./AccountStack";
 import MenuItem from "../../../components/MenuItem";
 import MenuScreen from "./MenuStack";
 
