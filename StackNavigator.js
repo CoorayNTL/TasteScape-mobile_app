@@ -12,6 +12,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ViewAllOrdersCus from './screens/Orders/ViewAllOrdersCus';
 import FoodFinder from './screens/FoodFinder';
+import UpdateProfileScreen from './screens/UpdateProfileScreen';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Profile" component={ProfileScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Owner" component={OwnerScreen} options={{headerShown:false}}/>
         <Stack.Screen name="FoodFinder" component={FoodFinder} options={{headerShown:false}}/>
+        <Stack.Screen name="UpdateProfile" component={UpdateProfileScreen} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
