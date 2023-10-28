@@ -25,8 +25,9 @@ const HomeScreen = () => {
         <ScrollView style={{ marginTop: 50 }}>
             <Pressable
                 // onPress={() => navigation.navigate("FeedbackViewList")}
-                // onPress={() => navigation.navigate("AdUploadScreen")}
-                onPress={() => navigation.navigate("NewFoodListView")}
+                //onPress={() => navigation.navigate("AdUploadScreen")}
+                
+               // onPress={() => navigation.navigate("NewFoodListView")}
                 // onPress={() => navigation.navigate("ViewAddDetailsScreen")}
                 style={{ marginLeft: "auto", marginRight: 7 }}
             >

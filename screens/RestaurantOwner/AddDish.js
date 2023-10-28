@@ -5,6 +5,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import { auth } from "../../firebase"; 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import RNPickerSelect from "react-native-picker-select";
 
 const AddDish = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -133,6 +134,7 @@ const AddDish = ({ navigation }) => {
           onChangeText={setTopping}
         />
       </View>
+
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Price</Text>
         <TextInput

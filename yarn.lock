@@ -3093,13 +3093,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-picker/picker@npm:^2.5.1":
-  version: 2.5.1
-  resolution: "@react-native-picker/picker@npm:2.5.1"
+"@react-native-picker/picker@npm:^1.8.3":
+  version: 1.16.8
+  resolution: "@react-native-picker/picker@npm:1.16.8"
   peerDependencies:
-    react: ">=16"
+    react: 16 || 17
     react-native: ">=0.57"
-  checksum: 26edcb603fd8bb48b0f89122886de159359612d592d22c20eccc7a96d6e5de78302c065e57d3388c6cc919307506100faff3191aa17bd3dcfa51ed38b2831e8a
+  checksum: c0176e41ba7486bf0a27ab5471315848cb166330313bd12e29ee65b7d2e1dfde22383de6a89be15770d132b33bca1764e64feee3acf22c67c3733fd877d3e91f
   languageName: node
   linkType: hard
 
@@ -9430,6 +9430,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-picker-select@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "react-native-picker-select@npm:8.1.0"
+  dependencies:
+    "@react-native-picker/picker": ^1.8.3
+    lodash.isequal: ^4.5.0
+  checksum: 4f0101e4cf6e0fe71b7fedabe77c1f94161f9853d062a73469b1fa61c05fd31b4ff3e232a4807df195d1dc17aec3a7b306447fcbf5b08a811bcd75b3d288cace
+  languageName: node
+  linkType: hard
+
 "react-native-ratings@npm:8.0.4":
   version: 8.0.4
   resolution: "react-native-ratings@npm:8.0.4"
@@ -10799,7 +10809,6 @@ react-native-snap-carousel@latest:
     "@babel/core": ^7.20.0
     "@expo/vector-icons": ^13.0.0
     "@react-native-community/blur": ^4.3.2
-    "@react-native-picker/picker": ^2.5.1
     "@react-navigation/bottom-tabs": ^6.5.11
     "@react-navigation/native": ^6.1.8
     "@react-navigation/native-stack": ^6.9.14
@@ -10824,6 +10833,7 @@ react-native-snap-carousel@latest:
     react-native-maps: ^1.7.1
     react-native-modal: ^13.0.1
     react-native-modals: ^0.22.3
+    react-native-picker-select: ^8.1.0
     react-native-ratings: ^8.1.0
     react-native-safe-area-context: ^4.7.2
     react-native-screens: ^3.25.0

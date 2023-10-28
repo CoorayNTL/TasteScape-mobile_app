@@ -23,6 +23,7 @@ const OrderScreen = () => {
 
           // Convert the timestamp to a Date object
           const orderTime = orderData.orderTime.toDate();
+          console.log(orderData.orderTime)
           const currentTime = new Date();
           const timeDifference = Math.floor((currentTime - orderTime) / (1000 * 60)); // in minutes
 

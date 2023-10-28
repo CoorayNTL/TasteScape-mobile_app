@@ -10,12 +10,20 @@ const firebaseConfig = {
     storageBucket: "food-app-979ef.appspot.com",
     messagingSenderId: "373627899061",
     appId: "1:373627899061:web:c975dd239549360e1882fc",
+
     // apiKey: "AIzaSyBZmbVu4XeuIKXyyeLt11P_veYHsuThKkY",
     // authDomain: "tasetscape.firebaseapp.com",
     // projectId: "tasetscape",
     // storageBucket: "tasetscape.appspot.com",
     // messagingSenderId: "587385352342",
     // appId: "1:587385352342:web:f3143cf3bfea0fcee952b7",
+
+    // apiKey: "AIzaSyATuxMFXhU5CtC3bU70I-UGEGSE-1hAeOQ",
+    // authDomain: "tasatescrap.firebaseapp.com",
+    // projectId: "tasatescrap",
+    // storageBucket: "tasatescrap.appspot.com",
+    // messagingSenderId: "897761939334",
+    // appId: "1:897761939334:web:b36276fb8cfc1084856607",
 };
 
 const app = initializeApp(firebaseConfig);

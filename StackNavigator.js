@@ -27,6 +27,7 @@ import Tabss from "./screens/RestaurantOwner/navigation/Tab";
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
+    const Tab = createNativeStackNavigator();
     return (
         <NavigationContainer>
             <Stack.Navigator>
